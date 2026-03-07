@@ -1,0 +1,24 @@
+services:
+
+  backend:
+    build: ./app/backend
+    container_name: devops-backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgresql://devops:devops@postgres:5432/devopsdb
+
+  postgres:
+    image: postgres:15
+    container_name: devops-postgres
+    environment:
+      POSTGRES_USER: devops
+      POSTGRES_PASSWORD: devops
+      POSTGRES_DB: devopsdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
