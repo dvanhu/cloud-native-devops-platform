@@ -1,4 +1,4 @@
-# Cloud Native DevOps Platform ![CI Pipeline](https://github.com/dvanhu/cloud-native-devops-platform/actions/workflows/ci.yml/badge.svg)
+<img width="1536" height="1024" alt="ChatGPT Image Mar 8, 2026, 05_05_12 PM" src="https://github.com/user-attachments/assets/3332aa13-bc03-416b-bb41-1e37344b06ff" /># Cloud Native DevOps Platform ![CI Pipeline](https://github.com/dvanhu/cloud-native-devops-platform/actions/workflows/ci.yml/badge.svg)
 
 A complete **Cloud Native DevOps Pipeline** implementing CI/CD, GitOps, containerization, and Kubernetes deployment using modern DevOps tools.
 
@@ -10,28 +10,8 @@ This project demonstrates a **production-style DevOps workflow** where applicati
 # Project Architecture
 
 ```
-Developer
-    │
-    ▼
-GitHub Repository
-    │
-    ▼
-GitHub Actions (CI Pipeline)
-    │
-    ▼
-Docker Build
-    │
-    ▼
-DockerHub Image Registry
-    │
-    ▼
-ArgoCD (GitOps Controller)
-    │
-    ▼
-Kubernetes Cluster
-    │
-    ▼
-Backend Application Pods
+<img width="1536" height="1024" alt="ChatGPT Image Mar 8, 2026, 05_05_12 PM" src="https://github.com/user-attachments/assets/711415f7-06ef-4e3e-8753-e6e8734afbdc" />
+
 ```
 
 ---
@@ -226,6 +206,7 @@ This enables observability of application and infrastructure metrics.
 * Kubernetes Orchestration
 * Infrastructure as Code
 * Monitoring & Observability
+
 
 
 
