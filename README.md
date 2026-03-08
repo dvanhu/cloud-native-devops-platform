@@ -181,17 +181,6 @@ ReplicaSet
    ↓
 Pods
 ```
-
----
-
-# Monitoring
-
-Monitoring stack includes:
-
-* Prometheus (metrics collection)
-* Grafana (visualization dashboards)
-
-This enables observability of application and infrastructure metrics.
 ---
 
 # Key DevOps Concepts Demonstrated
@@ -202,10 +191,3 @@ This enables observability of application and infrastructure metrics.
 * Kubernetes Orchestration
 * Infrastructure as Code
 * Monitoring & Observability
-
-
-
-
-
-
-
