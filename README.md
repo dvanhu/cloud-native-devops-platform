@@ -8,10 +8,7 @@ This project demonstrates a **production-style DevOps workflow** where applicati
 
 # Project Architecture
 
-```
 <img width="1536" height="1024" alt="ChatGPT Image Mar 8, 2026, 05_05_12 PM" src="https://github.com/user-attachments/assets/2adad053-7e18-4c27-8fb6-a1234067ab2c" />
-
-```
 
 ---
 
@@ -205,6 +202,7 @@ This enables observability of application and infrastructure metrics.
 * Kubernetes Orchestration
 * Infrastructure as Code
 * Monitoring & Observability
+
 
 
 
