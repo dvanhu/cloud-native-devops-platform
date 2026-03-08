@@ -1,6 +1,5 @@
-<img width="1536" height="1024" alt="ChatGPT Image Mar 8, 2026, 05_05_12 PM" src="https://github.com/user-attachments/assets/3332aa13-bc03-416b-bb41-1e37344b06ff" /># Cloud Native DevOps Platform ![CI Pipeline](https://github.com/dvanhu/cloud-native-devops-platform/actions/workflows/ci.yml/badge.svg)
+A complete **Cloud Native DevOps Pipeline** implementing CI/CD, GitOps, containerization, and Kubernetes deployment using modern DevOps tools.![CI Pipeline](https://github.com/dvanhu/cloud-native-devops-platform/actions/workflows/ci.yml/badge.svg)
 
-A complete **Cloud Native DevOps Pipeline** implementing CI/CD, GitOps, containerization, and Kubernetes deployment using modern DevOps tools.
 
 
 This project demonstrates a **production-style DevOps workflow** where application code is automatically built, containerized, pushed to a registry, and deployed to Kubernetes through GitOps.
@@ -10,7 +9,7 @@ This project demonstrates a **production-style DevOps workflow** where applicati
 # Project Architecture
 
 ```
-<img width="1536" height="1024" alt="ChatGPT Image Mar 8, 2026, 05_05_12 PM" src="https://github.com/user-attachments/assets/711415f7-06ef-4e3e-8753-e6e8734afbdc" />
+<img width="1536" height="1024" alt="ChatGPT Image Mar 8, 2026, 05_05_12 PM" src="https://github.com/user-attachments/assets/2adad053-7e18-4c27-8fb6-a1234067ab2c" />
 
 ```
 
@@ -206,6 +205,7 @@ This enables observability of application and infrastructure metrics.
 * Kubernetes Orchestration
 * Infrastructure as Code
 * Monitoring & Observability
+
 
 
 
