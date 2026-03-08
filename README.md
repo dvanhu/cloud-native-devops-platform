@@ -52,12 +52,19 @@ Backend Application Pods
 # Features
 
 ✔ Automated CI pipeline using GitHub Actions
+
 ✔ Docker image build and push to DockerHub
+
 ✔ Kubernetes deployment using manifests
+
 ✔ GitOps deployment with ArgoCD
+
 ✔ Automatic container image updates using ArgoCD Image Updater
+
 ✔ Scalable backend deployment (ReplicaSet)
+
 ✔ Infrastructure provisioning using Terraform
+
 ✔ Monitoring setup using Prometheus & Grafana
 
 ---
@@ -218,3 +225,4 @@ This enables observability of application and infrastructure metrics.
 * Kubernetes Orchestration
 * Infrastructure as Code
 * Monitoring & Observability
+
