@@ -5,7 +5,8 @@ metadata:
   name: backend
   annotations:
     argocd-image-updater.argoproj.io/image-list: backend=dvanhu/devops-backend
-
+    argocd-image-updater.argoproj.io/backend.update-strategy: latest
+    argocd-image-updater.argoproj.io/backend.allow-tags: regexp:^[0-9a-f]{7}$
 spec:
   replicas: 2
 
