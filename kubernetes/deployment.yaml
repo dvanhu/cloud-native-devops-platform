@@ -3,6 +3,8 @@ kind: Deployment
 
 metadata:
   name: backend
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: backend=dvanhu/devops-backend
 
 spec:
   replicas: 2
@@ -19,8 +21,8 @@ spec:
     spec:
       containers:
       - name: backend
-        image: devops-backend:latest
-        imagePullPolicy: Never
+        image: dvanhu/devops-backend:latest
+        imagePullPolicy: Always
 
         ports:
         - containerPort: 8000
