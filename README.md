@@ -1,6 +1,7 @@
 # Cloud Native DevOps Platform
 
-A complete **Cloud Native DevOps Pipeline** implementing CI/CD, GitOps, containerization, and Kubernetes deployment using modern DevOps tools.
+A complete **Cloud Native DevOps Pipeline** implementing CI/CD, GitOps, containerization, and Kubernetes deployment using modern DevOps tools.![CI Pipeline](https://github.com/dvanhu/cloud-native-devops-platform/actions/workflows/ci.yml/badge.svg)
+
 
 This project demonstrates a **production-style DevOps workflow** where application code is automatically built, containerized, pushed to a registry, and deployed to Kubernetes through GitOps.
 
@@ -225,4 +226,5 @@ This enables observability of application and infrastructure metrics.
 * Kubernetes Orchestration
 * Infrastructure as Code
 * Monitoring & Observability
+
 
