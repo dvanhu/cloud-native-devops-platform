@@ -1,193 +1,223 @@
-A complete **Cloud Native DevOps Pipeline** implementing CI/CD, GitOps, containerization, and Kubernetes deployment using modern DevOps tools.![CI Pipeline](https://github.com/dvanhu/cloud-native-devops-platform/actions/workflows/ci.yml/badge.svg)
+# Cloud Native DevOps Platform
 
+![CI Pipeline](https://github.com/dvanhu/cloud-native-devops-platform/actions/workflows/ci.yml/badge.svg)
 
+A **production-style Cloud Native DevOps platform** demonstrating end-to-end CI/CD and GitOps using GitHub Actions, Docker, ArgoCD, and Kubernetes — with infrastructure provisioning via Terraform and observability via Prometheus & Grafana.
 
-This project demonstrates a **production-style DevOps workflow** where application code is automatically built, containerized, pushed to a registry, and deployed to Kubernetes through GitOps.
-
----
-
-# Project Architecture
-
-<img width="1536" height="1024" alt="file_000000007970720baabfba88b6fab7a8" src="https://github.com/user-attachments/assets/808dd0f9-7fb0-4c85-ab89-a95a5455bd74" />
+> Code is automatically built, containerized, pushed to DockerHub, and deployed to Kubernetes through GitOps — no manual steps.
 
 ---
 
-# Tech Stack
-
-| Category                | Tools Used          |
-| ----------------------- | ------------------- |
-| Version Control         | Git, GitHub         |
-| CI Pipeline             | GitHub Actions      |
-| Containerization        | Docker              |
-| Container Registry      | DockerHub           |
-| GitOps                  | ArgoCD              |
-| Container Orchestration | Kubernetes          |
-| Infrastructure          | Terraform           |
-
----
-
-# Features
-
-✔ Automated CI pipeline using GitHub Actions
-
-✔ Docker image build and push to DockerHub
-
-✔ Kubernetes deployment using manifests
-
-✔ GitOps deployment with ArgoCD
-
-✔ Automatic container image updates using ArgoCD Image Updater
-
-✔ Scalable backend deployment (ReplicaSet)
-
-✔ Infrastructure provisioning using Terraform
-
-✔ Monitoring setup using Prometheus & Grafana
-
----
-
-# Project Structure
+## Architecture Overview
 
 ```
-cloud-native-devops-platform
-│
-├── .github
-│   └── workflows
-│       └── ci.yml
-│
-├── app
-│   └── backend
-│       ├── Dockerfile
-│       └── application code
-│
-├── kubernetes
-│   ├── deployment.yaml
-│   ├── service.yaml
-│   └── ingress.yaml
-│
-├── terraform
-│   └── infrastructure configuration
-│
-├── monitoring
-│   ├── prometheus
-│   └── grafana
-│
+Developer pushes code
+        │
+        ▼
+  GitHub Actions (CI)
+        │
+   ┌────┴────┐
+   │  Docker  │  Build → Tag (Git SHA) → Push to DockerHub
+   └────┬────┘
+        │
+        ▼
+ArgoCD Image Updater
+        │   Detects new image tag, updates K8s manifest
+        ▼
+   ArgoCD Sync
+        │   Reconciles cluster state with Git
+        ▼
+Kubernetes Cluster
+  ┌─────────────────────────────────┐
+  │  Ingress → Service → Deployment │
+  │           └── ReplicaSet        │
+  │                └── Pods         │
+  └─────────────────────────────────┘
+        │
+        ▼
+  Prometheus + Grafana (Monitoring)
+```
+
+---
+
+## Tech Stack
+
+| Category | Tool |
+|---|---|
+| Version Control | Git, GitHub |
+| CI Pipeline | GitHub Actions |
+| Containerization | Docker |
+| Container Registry | DockerHub |
+| GitOps | ArgoCD + ArgoCD Image Updater |
+| Orchestration | Kubernetes |
+| Infrastructure as Code | Terraform (HCL) |
+| Monitoring & Observability | Prometheus, Grafana |
+| Application | Python (backend) |
+
+**Language breakdown:** Python 40% · HCL (Terraform) 31% · Dockerfile 29%
+
+---
+
+## Project Structure
+
+```
+cloud-native-devops-platform/
+├── .github/
+│   └── workflows/
+│       └── ci.yml              # GitHub Actions CI pipeline
+├── app/
+│   └── backend/
+│       ├── Dockerfile          # Container image definition
+│       └── ...                 # Python application code
+├── kubernetes/
+│   ├── deployment.yaml         # App deployment & ReplicaSet
+│   ├── service.yaml            # ClusterIP / LoadBalancer
+│   └── ingress.yaml            # Ingress routing rules
+├── gitops/                     # ArgoCD application manifests
+├── terraform/                  # Infrastructure provisioning
+├── monitoring/
+│   ├── prometheus/             # Scrape configs & rules
+│   └── grafana/                # Dashboard definitions
+├── docs/                       # Additional documentation
+├── docker-compose.yml          # Local development setup
 └── README.md
 ```
 
 ---
 
-# CI/CD Workflow
+## Getting Started
 
-## Continuous Integration (CI)
+### Prerequisites
 
-Triggered when code is pushed to the `main` branch.
+- Docker & Docker Compose
+- `kubectl` configured against a Kubernetes cluster
+- Terraform ≥ 1.0
+- ArgoCD installed on your cluster
+- DockerHub account
 
-Pipeline Steps:
+### 1. Local Development
 
+```bash
+git clone https://github.com/dvanhu/cloud-native-devops-platform.git
+cd cloud-native-devops-platform
+docker-compose up --build
+```
+
+### 2. Provision Infrastructure (Terraform)
+
+```bash
+cd terraform
+terraform init
+terraform plan
+terraform apply
+```
+
+### 3. Deploy to Kubernetes (Manual)
+
+```bash
+kubectl apply -f kubernetes/deployment.yaml
+kubectl apply -f kubernetes/service.yaml
+kubectl apply -f kubernetes/ingress.yaml
+```
+
+### 4. Set Up ArgoCD
+
+```bash
+# Install ArgoCD
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+# Apply the GitOps app definition
+kubectl apply -f gitops/
+```
+
+ArgoCD will then continuously sync the cluster state with this repository.
+
+---
+
+## CI/CD Pipeline
+
+### Continuous Integration — GitHub Actions (`.github/workflows/ci.yml`)
+
+Triggered on every push to `main`:
+
+```
 1. Checkout repository
 2. Login to DockerHub
 3. Build Docker image
-4. Tag image using Git commit SHA
-5. Push image to DockerHub
-
-Example GitHub Actions pipeline:
-
-```
-Git Push
-   ↓
-GitHub Actions
-   ↓
-Docker Build
-   ↓
-Docker Push
+4. Tag image with Git commit SHA
+5. Push image to DockerHub → dvanhu/devops-backend:<commit-sha>
 ```
 
----
-
-## Continuous Deployment (CD)
-
-Deployment is handled using **GitOps with ArgoCD**.
-
-Workflow:
+### Continuous Deployment — GitOps with ArgoCD
 
 ```
-New Docker Image
-        │
-        ▼
-ArgoCD Image Updater
-        │
-        ▼
-Update Kubernetes Manifest
-        │
-        ▼
-ArgoCD Sync
-        │
-        ▼
-Kubernetes Deployment
+New image pushed to DockerHub
+          │
+          ▼
+ArgoCD Image Updater detects new tag
+          │
+          ▼
+Auto-updates Kubernetes manifest in Git
+          │
+          ▼
+ArgoCD syncs cluster → rolling update
 ```
 
----
-
-# Docker Image
-
-Docker images are pushed to DockerHub.
-
-Repository:
-
-```
-https://hub.docker.com/r/dvanhu/devops-backend
-```
-
-Images are tagged using **Git commit SHA** for traceability.
-
-Example:
-
+Images are tagged by Git commit SHA for full traceability:
 ```
 dvanhu/devops-backend:ed17084659da4ab08...
 ```
 
+DockerHub repository: [hub.docker.com/r/dvanhu/devops-backend](https://hub.docker.com/r/dvanhu/devops-backend)
+
 ---
 
-# Kubernetes Deployment
+## Kubernetes Resources
 
-The backend application is deployed using Kubernetes resources:
+| Resource | Purpose |
+|---|---|
+| `Deployment` | Manages pod lifecycle and rolling updates |
+| `ReplicaSet` | Ensures desired number of pod replicas |
+| `Service` | Exposes the application within the cluster |
+| `Ingress` | Routes external HTTP traffic to the service |
 
-* Deployment
-* ReplicaSet
-* Service
-* Ingress
-
-
-# GitOps with ArgoCD
-
-ArgoCD continuously monitors the Git repository and ensures the Kubernetes cluster matches the declared state.
-
-Application Status:
-
-```
-Healthy
-Synced
-```
-
-Deployment graph:
-
-```
-Service
-   ↓
-Deployment
-   ↓
-ReplicaSet
-   ↓
-Pods
-```
 ---
 
-# Key DevOps Concepts Demonstrated
+## Monitoring
 
-* CI/CD Automation
-* Containerization
-* GitOps Deployment
-* Kubernetes Orchestration
-* Infrastructure as Code
-* Monitoring & Observability
+Prometheus scrapes application and cluster metrics; Grafana provides dashboards for:
+
+- Pod health and restart counts
+- Resource utilization (CPU, memory)
+- Request rates and latency
+- Deployment rollout status
+
+---
+
+## Required Secrets (GitHub Actions)
+
+Set these in your repository's **Settings → Secrets and Variables → Actions**:
+
+| Secret | Description |
+|---|---|
+| `DOCKERHUB_USERNAME` | Your DockerHub username |
+| `DOCKERHUB_TOKEN` | DockerHub access token |
+
+---
+
+## Key DevOps Concepts Demonstrated
+
+- **CI/CD Automation** — Zero-touch pipeline from commit to deployment
+- **GitOps** — Git as the single source of truth for cluster state
+- **Containerization** — Immutable, reproducible Docker images
+- **Kubernetes Orchestration** — Scalable, self-healing deployments
+- **Infrastructure as Code** — Reproducible infra via Terraform
+- **Monitoring & Observability** — Metrics, dashboards, and alerting
+- **Image Traceability** — SHA-tagged images for audit and rollback
+
+---
+
+## 📄 License
+
+This project is open source. See the repository for details.
