@@ -218,6 +218,3 @@ Set these in your repository's **Settings → Secrets and Variables → Actions*
 
 ---
 
-## 📄 License
-
-This project is open source. See the repository for details.
