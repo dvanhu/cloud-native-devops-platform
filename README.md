@@ -17,7 +17,7 @@ Developer pushes code
   GitHub Actions (CI)
         │
    ┌────┴────┐
-   │  Docker  │  Build → Tag (Git SHA) → Push to DockerHub
+   │  Docker │  Build → Tag (Git SHA) → Push to DockerHub
    └────┬────┘
         │
         ▼
@@ -215,6 +215,3 @@ Set these in your repository's **Settings → Secrets and Variables → Actions*
 - **Infrastructure as Code** — Reproducible infra via Terraform
 - **Monitoring & Observability** — Metrics, dashboards, and alerting
 - **Image Traceability** — SHA-tagged images for audit and rollback
-
----
-
